@@ -5,7 +5,7 @@ Execute o projeto clicando no ícone de Play;
 Para cadastrar os gabaritos siga as instruções abaixo:
   Entre no PostMan, escolha o método Post, e coloque o seguinte caminho: localhost/cadastra_gabarito
   Escolha a opção Body e coloque os dados para cadastro em formato JSON. Ex:
-    {"Matematica":[{"Questao":1,"Resposta":"F","Peso":3},{"Questao":2,"Resposta":"D","Peso":1},{"Questao":3,"Resposta":"D","Peso":1}]}
+   {"Prova 1":[{"Questao":1,"Resposta":"F","Peso":3},{"Questao":2,"Resposta":"D","Peso":1},{"Questao":3,"Resposta":"D","Peso":1}]}
    Lembre-se de escolher o formato JSON;
   Depois clique em Send;
   As respostas aparecerão na tela logo abaixo da tela onde você colocou os dados;
@@ -16,7 +16,7 @@ Para cadastrar os gabaritos siga as instruções abaixo:
     {
   "Aluno": [
     {
-      "Geografia": [
+      "Prova1": [
         {
           "Questao": 1,
           "Resposta": "F"
@@ -32,7 +32,7 @@ Para cadastrar os gabaritos siga as instruções abaixo:
       ]
     },
     {
-      "Matematica": [
+      "Prova2": [
         {
           "Questao": 1,
           "Resposta": "F"
