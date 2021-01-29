@@ -71,25 +71,29 @@ class StudentsAnswers:
 
     def validate_grade(self, student_name):
         student_index = -1
+        student_found = -1
         for student in self.students_answers:
             student_index += 1
-            var = list(student.keys())[0]
-            if var == student_name:
-                quit()
+            if list(student.keys())[0] == student_name:
+                student_found = student_index
         response = {"Resultado do aluno": []}
-        template_index = -1
-        template_name = ""
-        for exam in self.students_answers[student_index]:
+        for exam in (self.students_answers[student_found])[student_name]:
+            template_index = -1
+            template_found = -1
+            template_name = ""
             for exam_template in self.exams_templates.exams_templates:
                 template_index += 1
-                template_name = list(exam_template.keys())[0]
-                if list(exam.keys())[0] == template_name:
-                    quit()
+                if list(exam.keys())[0] == list(exam_template.keys())[0]:
+                    template_found = template_index
+                    template_name = list(exam_template.keys())[0]
             exam_result = 0
-            for template_question in self.exams_templates.exams_templates[template_index]:
-                for exam_question in self.students_answers[student_index]:
-                    if exam_question["Questao"] == template_question["Qestao"]:
+            template_weights = 0
+            for template_question in (self.exams_templates.exams_templates[template_found])[template_name]:
+                template_weights += template_question["Peso"]
+                for exam_question in exam[template_name]:
+                    if exam_question["Questao"] == template_question["Questao"]:
                         if exam_question["Resposta"] == template_question["Resposta"]:
                             exam_result += template_question["Peso"]
+            exam_result /= template_weights
             response["Resultado do aluno"].append({template_name: exam_result})
         return response
