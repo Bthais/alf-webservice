@@ -59,7 +59,7 @@ class ApiHandler(BaseHTTPRequestHandler):
 
         if self.path.startswith("/valida_respostas_aluno?aluno="):
             query_keys = parse_qs(urlparse(self.path).query)
-            response = self.students_answers.validate_grade(query_keys["aluno"])
+            response = self.students_answers.validate_grade(list(query_keys["aluno"])[0])
             self.__successful_response()
             self.__send_response_msg(response)
 
