@@ -73,7 +73,8 @@ class StudentsAnswers:
         student_index = -1
         for student in self.students_answers:
             student_index += 1
-            if student_name == list(student.keys())[0]:
+            var = list(student.keys())[0]
+            if var == student_name:
                 quit()
         response = {"Resultado do aluno": []}
         template_index = -1

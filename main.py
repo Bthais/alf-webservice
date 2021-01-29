@@ -1,5 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 
 from ExamsTemplates import ExamsTemplates
 from StudentsAnswers import StudentsAnswers
@@ -29,7 +31,7 @@ class ApiHandler(BaseHTTPRequestHandler):
         self.send_response(409)
         self.__set_header()
 
-    def _post_response(self, response):
+    def __send_response_msg(self, response):
         self.wfile.write(bytes(json.dumps(response), "utf8"))
 
     def __resolve_response(self, response):
@@ -41,7 +43,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             self.__not_acceptable_response()
         elif response["codigo"] == 409:
             self.__conflict_response()
-        self._post_response(response)
+        self.__send_response_msg(response)
 
     def __fill_json_messege(self):
         content_length = int(self.headers['Content-Length'])
@@ -55,8 +57,11 @@ class ApiHandler(BaseHTTPRequestHandler):
             student = '{"name":"Joao", "score":"100"}'
             self.wfile.write(bytes(student, "utf8"))
 
-        if self.path == "/valida_respostas_aluno":
-            
+        if self.path.startswith("/valida_respostas_aluno?aluno="):
+            query_keys = parse_qs(urlparse(self.path).query)
+            response = self.students_answers.validate_grade(query_keys["aluno"])
+            self.__successful_response()
+            self.__send_response_msg(response)
 
     def do_POST(self):
         if self.path == "/cadastra_gabarito":
